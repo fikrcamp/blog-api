@@ -1,14 +1,23 @@
-### Express expense tracker task
+### Blog project API
 
-Your are required to create some endpoints and each endpoint must do a specific task. This project you will be adding, removing, editing and getting expenses data. Below are the endpoints and their methods that are required:
+So we nearly finishing the bootcamp 🎉.This will be creating a blog application for our final project which will incorporate alot of things we have learnt so far and alot of new concepts. For this project the main features for the API will include as follows:
 
-1. /expenses GET => response should be list of expenses
-2. /expenses POST => should add to the expense list and the body should include description & amount
-3. /expense/id DELETE => should delete the specific expense by the id that is passed
-4. /expense/id PUT => should edit the specific expense and the body should include description or amount or both
-5. /expense/total GET => should return the total amount of all expenses
-6. /expense/id GET => just get one expense with that specific id passed
 
-For number 3,4 & 6 you need to figure out the concept of params and your task is to try and figure out how to use it using the express documentation or any other resource you find.
+## 1. Auth Feature
+- **Sign in** - For a user to sign in to the application
+- **Sign up** - For a user to register
 
-Good Luck!
+## 2. Blog Feature
+- **Blog list** - Get the list of all blogs
+- **One Blog** - Get one blog by ID
+- **Create Blog** - For a user to create a blog
+- **Edit Blog** - For a user to edit a blog by its ID
+- **Delete Blog** - For a user to delete a blog by its ID
+
+## 3. Comment Feature
+- **Get comments** - Get list of comments for a certain blog
+- **Create comments** - User to leave a comment on a certain blog
+- **Edit comment** - User to edit comment by ID
+- **Delete comment** - User to delete comment by ID
+
+
