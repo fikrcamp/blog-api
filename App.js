@@ -1,12 +1,18 @@
-const express = require("express")
+const express = require("express");
 
-const app = express()
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
+const AuthRoutes = require("./Routes/authRoutes");
+const BlogRoutes = require("./Routes/blogRoutes");
+const CommentRoutes = require("./Routes/commentRoutes");
 
-const PORT = 8000
+app.use("/auth", AuthRoutes);
+app.use("/blog", BlogRoutes);
+app.use("/comment", CommentRoutes);
+const PORT = 8000;
 
-app.listen(PORT,()=>{
-    console.log(`Listening on port ${PORT}`)
-})
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
