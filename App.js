@@ -4,9 +4,17 @@ const app = express()
 
 app.use(express.json())
 
+const authRoutes = require("./Routes/authRoutes")
+const blogs = require("./Routes/Blogs")
+const comment = require("./Routes/Comments")
 
-const PORT = 8000
+app.use("/comments", comment)
+app.use("/auth", authRoutes)
+app.use("/blog", blogs)
 
-app.listen(PORT,()=>{
+
+const PORT = 9000
+
+app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
