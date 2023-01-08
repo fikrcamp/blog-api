@@ -4,11 +4,11 @@ const router = express.Router()
 
 const blogController = require("../Controllers/blogController")
 
-router.route("/list").get(blogController.allBlog);
+router.route("/allBlog").get(blogController.allBlog);
 
 router.route("/create").post(blogController.createBlog);
 
-router.route("/list/:id").get(blogController.oneBlog);
+router.route("/oneBlog/:id").get(blogController.oneBlog);
 
 router.route("/edit/:id").put(blogController.editBlog);
 

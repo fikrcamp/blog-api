@@ -1,4 +1,5 @@
 const express = require("express")
+const dotenv = require("dotenv")
 
 const app = express()
 
@@ -9,6 +10,9 @@ const authRoutes = require("./Routes/authRoutes")
 const commentRoutes = require("./Routes/commentRoutes")
 
 const postRoutes = require("./Routes/blogRoutes")
+
+dotenv.config({path:"./.env"})
+require("./server")
 
 app.use("/auth",authRoutes)
 app.use("/comment",commentRoutes)

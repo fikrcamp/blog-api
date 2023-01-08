@@ -1,55 +1,54 @@
-const userLists = [
-    {
-      id: 1,
-      name: "Abdirahman Mohamed",
-      email: "Buushe@gmail.com",
-      password: "Buushe3456",
-    },
-    {
-      id: 2,
-      name: "khadar yusuf",
-      email: "khaan12@gmail.com",
-      password: "khaan5577",
-    },
-    
-  ];
+
+const Blog = require("../Models/blogModel")
+  //
+  exports.allBlog = async(req, res) => {
+    await Blog.find().then((blogs)=>{
+      res.send({blogs})
+    }).catch(()=>{
+      res.status(400).json({ message: "oops we have error" });
+    })
+  }
   
   //
-  const allBlog = (req, res) => {
-    res.status(200).json({
-      message: "Get the list of all blogs",
-      list: userLists,
-    });
-  };
-  
-  //
-  const oneBlog = (req, res) => {
-    const id = req.params.id - 1;
-    res.status(200).json({
-      message: `You got the user blog  list by Id`,
-      list: userLists[id],
-    });
+  exports.oneBlog = async(req, res) => {
+    try {
+      await Blog.findOne(req.body)
+      res.status(200).json({message:"you get one blog"})
+    }catch{
+      res.status(400).json({message:"Oops we have error!"})
+    }
   };
   // 
-  const createBlog = (req, res) => {
-    res.status(200).json({ message: "Your blog was being created" });
+  exports.createBlog = async(req, res) => {
+    try{
+      await Blog.create(req.body)
+      res.status(200).json({message:"You have created blog"})
+  
+  }catch{
+      res.status(400).json({message:"Oops we have error!"})
+  }
   };
   
   //
-  const editBlog = (req, res) => {
-    const id = req.params.id;
-    res.status(200).json({
-      message: `You are edited the blog list that have the id of ${id}`,
-    });
+  exports.editBlog = async(req, res) => {
+    try{
+      await Blog.updateOne(req.body)
+      res.status(200).json({ message: "you have edited  your  blog" });
+    }catch{
+      res.status(400).json({message:"Oops we have error!"})
+    }
   };
   
   // 
-  const deleteBlog = (req, res) => {
-    const id = req.params.id;
-    res.status(200).json({ message: `Your have deleted blog list  ` ,
-    list:userLists[id],
-  })
+  exports.deleteBlog = async(req, res) => {
+   
+    try{
+      await Comment.deleteOne(req.body)
+      res.status(200).json({ message: "you have deleted  your blog"});
+    }catch{
+      res.status(400).json({message:"Oops we have error!"})
+    }
     
   };
   
-  module.exports = { allBlog, oneBlog, createBlog, editBlog, deleteBlog };
+  

@@ -1,41 +1,48 @@
-const usersComments = [
-    {
-      userId: 1,
-      name: "ABDIRAHMAN",
-      comment: "Your post is great bro ",
-    },
-    {
-      userId: 1,
-      name: "farhan",
-      comment: "Thnk you bro",
-    },
-  ];
-  
+const Comment = require("../Models/commentModel");
+
   //  
-  const getComment = (req, res) => {
-    res.status(200).json({
-      message: "Here are all the comments ",
-      comment: usersComments,
-    });
-  };
-  
+exports.getComment = async(req, res) => {
+  await Comment.find().then((comments)=>{
+    res.send({comments})
+  }).catch(()=>{
+    res.status(400).json({ message: "oops we have error" });
+  })
+}
   //  
-  const createComment = (req, res) => {
-    res.status(200).json({
-      message: "You  have created a blog  comment thanks",
-    });
+exports.createComment = async(req, res) => {
+  try{
+    await Comment.create(req.body)
+    res.status(200).json({message:"You have created comment"})
+
+}catch{
+    res.status(400).json({message:"Oops we have error!"})
+}
   };
   
   // 
-  const editComment = (req, res) => {
-    const id = req.params.id;
-    res.status(200).json({ message: `you have edited  your  comment ${id}` });
+exports.editComment = async(req, res) => {
+   
+    try{
+      await Comment.updateOne(req.body)
+      res.status(200).json({ message: "you have edited  your  comment" });
+    }catch{
+      res.status(400).json({message:"Oops we have error!"})
+    }
+    
   };
   
   //
-  const deleteComment = (req, res) => {
-    const id = req.params.id;
-    res.status(200).json({ message: `you have deleted  your comment  ${id}` });
+exports.deleteComment = async(req, res) => {
+    
+    try{
+      await Comment.deleteOne(req.body)
+      res.status(200).json({ message: "you have deleted  your comment"});
+    }catch{
+      res.status(400).json({message:"Oops we have error!"})
+    }
+      
+    
+    
   };
   
-  module.exports = { getComment, createComment, editComment, deleteComment };
+  

@@ -4,9 +4,9 @@ const comment = express.Router()
 
 const commentConrtoller = require("../Controllers/commentController")
 
-comment.route("/list").get(commentConrtoller.getComment)
+comment.route("/getcomment").get(commentConrtoller.getComment)
 
-comment.route("/coment").post(commentConrtoller.createComment)
+comment.route("/create").post(commentConrtoller.createComment)
 
 comment.route("/edit/:id").put(commentConrtoller.editComment);
 
