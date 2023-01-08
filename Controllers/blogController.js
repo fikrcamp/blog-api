@@ -37,7 +37,11 @@ const newBlog = async(req, res) => {
 const updateBlog = async(req, res) => {
     try{
         //find blog by id and update it
-        const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.params.body, {new:true})
+        const updatedBlog = await Blog.findByIdAndUpdate(req.params.id,{
+                title: req.body.title, 
+                content:req.body.content, 
+                author:req.body.author}, 
+                {new:true})
         res.status(200).json(updatedBlog)
     }catch{
         res.status(400).json({message: "unable to update!!"})
