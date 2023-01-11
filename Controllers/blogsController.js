@@ -1,22 +1,80 @@
+const blog = require('../Models/blogModel')
 
-const bloglist = (req, res) => {
-    res.status(200).json({ message: "this is the bloglist getter, we found these data  " })
+
+
+const bloglist = async(req, res) => {
+    try{
+        await blog.find({blog}).then(()=>{
+            res.status(200).json({ message: "this is the bloglist getter, we found these data  " })
+        })
+       
+    }catch{
+        res.status(400).json({ message: "from getter method :- OOPS something is wrong  " })
+    }
+    
 }
 
-const oneblog = (req, res) => {
-    res.status(200).json({ message: "this is the oneblog getter, you've get an information based on your selected id" })
+const oneblog = async(req, res) => {
+    const id = req.params.id
+
+try{
+    await blog.findById(id).then(()=>{
+        res.status(200).json({message:"you get this id data from database"})
+      })
+
+}catch{
+        res.status(400).json({message:"from getOneBlog error!!!!!"})
+}
+  
+    
+   
 }
 
-const createblog = (req, res) => {
-    res.status(200).json({ message: "this is createblog post, you created a new post " })
+const createblog = async(req, res) => {
+    try{
+       await blog.create(req.body).then(()=>{
+        res.status(200).json({ message: " you've created a new post " })
+       })
+    }catch{
+        res.status(400).json({ message: "from post/create method :- OOPS something is wrong " })
+    }
+    
 }
 
-const editblog = (req, res) => {
-    res.status(200).json({ message: "this is the editblog put, you've edited that id " })
+const editblog = async(req, res) => {
+  const idEdit = req.params.id
+
+  const newUpdate = {
+    id:idEdit,
+    title:req.body.title|| blog.title ,
+    content:req.body.content || blog.content
+  }
+
+  try{
+    await blog.findByIdAndUpdate(idEdit,newUpdate).then(()=>{
+        res.status(200).json({message:"successfully edited that blog based on your id selection"})
+      })
+  }
+  catch{
+    res.status(400).json({message:"something is wrong from editblogg"})
+  }
+
+    
+    
 }
 
-const deleteblog = (req, res) => {
-    res.status(200).json({ message: "deleteblog ,you've deleted that item from your blog " })
+const deleteblog = async(req, res) => {
+    const idDelete = req.params.id
+    
+    try{
+        await blog.findByIdAndDelete(idDelete).then(()=>{
+            res.status(200).json({message:"you've deleted successfully that data based on your id "})
+        })
+    }catch{
+        res.status(200).json({message:"error from deleteblog try again"})
+    }
+
+    
 }
 
 
