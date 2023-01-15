@@ -5,7 +5,7 @@ const allBlogs = async(req, res) => {
     try{
         //find all blogs
         const blogs = await Blog.find()
-        res.status(200).json(blogs)
+        res.status(200).json({blogs})
     }catch{
         res.status(400).json({message:"there aint no blogs here"})
     }
@@ -15,8 +15,8 @@ const allBlogs = async(req, res) => {
 const certainBlog = async(req, res) => {
     try{
         //find blog by id
-        const blog = await Blog.findById(req.params.id)
-        res.status(200).json(blog)
+        const blog = await Blog.findById(req.params.id).populate("user")
+        res.status(200).json({blog})
     }catch{
         res.status(400).json({message:"Blog not found"})
     }
@@ -26,7 +26,7 @@ const certainBlog = async(req, res) => {
 const newBlog = async(req, res) => {
     try{
         //create a new blog
-        const currentBlog = await Blog.create({title: req.body.title, content:req.body.content, author:req.body.author})
+        const currentBlog = await Blog.create(req.body)
         res.status(200).json(currentBlog)
     }catch{
         res.status(400).json({message: "Error while creating new blog!!"})
@@ -37,11 +37,8 @@ const newBlog = async(req, res) => {
 const updateBlog = async(req, res) => {
     try{
         //find blog by id and update it
-        const updatedBlog = await Blog.findByIdAndUpdate(req.params.id,{
-                title: req.body.title, 
-                content:req.body.content, 
-                author:req.body.author}, 
-                {new:true})
+        const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, 
+            {new:true})
         res.status(200).json(updatedBlog)
     }catch{
         res.status(400).json({message: "unable to update!!"})
