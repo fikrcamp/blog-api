@@ -15,23 +15,27 @@ const createBlog = async(req, res) => {
 
 //Get the list of all blogs
 const BlogList = async(req, res) => {
-
-  await Blog.find().then((blogs)=>{
-    res.send({blogs})
-  }).catch(()=>{
-    res.status(200).json({ message: "Error! can't fetch your blog list" });
-  })
- 
-};
+  try{
+   const blogs = await Blog.find({}).populate("User")
+   res.status(200).json({blogs})
+  } 
+  catch(e){
+   res.status(400).json({ message: "Error! can't fetch the blogs" });
+  }}
+     
 
 
 //Get one blog by ID
 const oneBlog = async(req, res) => {
-  await Blog.findById(req.params.id).then((blogs)=>{
-    res.status(200).json({data:blogs});
-  }).catch(()=>{
-    res.status(400).json({ message: "Error! can't fetch your blog id" });
-  })
+ try{
+  const blogs =await Blog.findById(req.params.id).populate("user") 
+  res.status(200).json({blogs})
+ } 
+ catch(e){
+  res.status(400).json({ message: "Error! can't fetch your blog id" });
+ }
+    
+ 
  
 };
 

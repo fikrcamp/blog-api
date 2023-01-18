@@ -8,7 +8,11 @@ const blogSchema= mongoose.Schema({
     content:{
         type: String,
         required:true
-    } 
+    } ,
+    user:{
+        type: mongoose.Types.ObjectId ,
+        ref: "user"  
+    }
   
 })
 
