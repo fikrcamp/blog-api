@@ -17,10 +17,19 @@ const userSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    phone:{
-        type:Number,
+    confirmPassword:{
+        type:String,
         required:true
     },
+    location:{
+        type:String,
+    },
+    bio:{
+        type:String,
+    },
+    work:{
+        type:String,
+    }
 })
 
 

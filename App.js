@@ -1,5 +1,6 @@
 const express = require("express")
 const dotenv = require("dotenv")
+const cors = require("cors")
 
 const app = express()
 
@@ -14,6 +15,8 @@ const commentRoutes = require('./Routes/commentRoutes')
 
 dotenv.config({path:"./.env"})
 require("./server")
+
+app.use(cors())
 
 app.use("/", authRoutes)
 

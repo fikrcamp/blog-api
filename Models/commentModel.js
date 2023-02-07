@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const commentSchema = mongoose.Schema({
-    comments: String,
+    comment: String,
     date: { type: Date, default: Date.now },
     user:{
         type: mongoose.Types.ObjectId,

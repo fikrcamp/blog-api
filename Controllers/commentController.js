@@ -1,10 +1,12 @@
 const Comment = require("../Models/commentModel")
 
 
+
 const commentList = async(req, res) => {
     try{
         //get all comments
-        const Comments = await Comment.find({}).populate("user").populate("blog")
+        const {id} = req.params
+        const Comments = await Comment.find({blog:id}).populate("user").populate("blog")
         res.status(200).json({Comments})
     }catch{
         res.status(400).json({message: "Error, Try again"})
@@ -15,6 +17,7 @@ const commentList = async(req, res) => {
 const newComment = async(req, res) => {
     try{
         //create a new comment
+        req.body.user = req.user.id
         const comment = await Comment.create(req.body)
         res.status(200).json({comment})
     }catch{
