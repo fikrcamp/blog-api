@@ -1,16 +1,18 @@
-const express = require("express")
+const express = require("express");
 
-const router = express.Router()
+const router = express.Router();
 
-const commentController = require("../Controllers/commentsController")
+const commentController = require("../Controllers/commentsController");
+const authController = require("../Controllers/authController");
 
-router.route("/getcomment").get(commentController.getcomment)
+router.route("/getcomment").get(commentController.getcomment);
 
-router.route("/createcomment").post(commentController.createcomment)
+router
+  .route("/createcomment")
+  .post(authController.protect, commentController.createcomment);
 
+router.route("/editcomment/:id").put(commentController.editcomment);
 
-router.route("/editcomment/:id").put(commentController.editcomment)
+router.route("/deletecomment/:id").delete(commentController.deletecomment);
 
-router.route("/deletecomment/:id").delete(commentController.deletecomment)
-
-module.exports = router
+module.exports = router;
