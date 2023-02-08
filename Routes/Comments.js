@@ -5,7 +5,7 @@ const router = express.Router();
 const commentController = require("../Controllers/commentsController");
 const authController = require("../Controllers/authController");
 
-router.route("/getcomment").get(commentController.getcomment);
+router.route("/getcomment/:id").get(commentController.getcomment);
 
 router
   .route("/createcomment")

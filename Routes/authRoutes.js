@@ -12,4 +12,5 @@ router
 //changing the password path
 router.route("/change").put(authController.protect, authController.password);
 
+
 module.exports = router;

@@ -9,7 +9,18 @@ const bloglist = async (req, res) => {
     res.status(400).json({ message: "OOPS ERROR!!" });
   }
 };
+//this endpoit is getting one specific user that is logged in the account
+const usersBlog = async (req, res) => {
+  try {
+    const { id, email } = req.user;
+    const findUser = await blog.find({ user: id });
+    res.status(200).json({ findUser });
+  } catch {
+    res.status(400).json({ message: "error!!!" });
+  }
+};
 
+//this endpoit is getting specific blog with user id
 const oneblog = async (req, res) => {
   const id = req.params.id;
 
@@ -46,6 +57,7 @@ const createblog = async (req, res) => {
 const editblog = async (req, res) => {
   const idEdit = req.params.id;
 
+  //
   const newUpdate = {
     id: idEdit,
     title: req.body.title || blog.title,
@@ -55,11 +67,11 @@ const editblog = async (req, res) => {
   try {
     await blog.findByIdAndUpdate(idEdit, newUpdate).then(() => {
       res.status(200).json({
-        message: "successfully edited that blog based on your id selection",
+        message: "successfully edited ",
       });
     });
   } catch {
-    res.status(400).json({ message: "something is wrong from editblogg" });
+    res.status(400).json({ message: "OOPS!! couldn't solved" });
   }
 };
 
@@ -69,12 +81,19 @@ const deleteblog = async (req, res) => {
   try {
     await blog.findByIdAndDelete(idDelete).then(() => {
       res.status(200).json({
-        message: "you've deleted successfully that data based on your id ",
+        message: "you've deleted successfully  ",
       });
     });
   } catch {
-    res.status(200).json({ message: "error from deleteblog try again" });
+    res.status(200).json({ message: "OOPS!!" });
   }
 };
 
-module.exports = { bloglist, oneblog, createblog, editblog, deleteblog };
+module.exports = {
+  bloglist,
+  oneblog,
+  createblog,
+  editblog,
+  deleteblog,
+  usersBlog,
+};

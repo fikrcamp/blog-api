@@ -2,7 +2,8 @@ const comment = require("../Models/commentModel");
 
 const getcomment = async (req, res) => {
   try {
-    const getComment = await comment.find().populate("user").populate("blog");
+    const {id} = req.params
+    const getComment = await comment.find({blog:id}).populate("user").populate("blog");
     res.status(200).json({ getComment });
   } catch {
     res.status(400).json({ message: "getcomment , something is wrong" });
