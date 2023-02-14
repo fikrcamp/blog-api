@@ -9,6 +9,9 @@ const userSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    file:{
+        type:String
+    },
     email:{
         type:String,
         required:true

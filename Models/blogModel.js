@@ -1,3 +1,4 @@
+const express = require("express")
 const mongoose = require("mongoose")
 
 const blogSchema = mongoose.Schema({
@@ -9,9 +10,8 @@ const blogSchema = mongoose.Schema({
         type: [String],
         required: true
     },
-    image:{
-        type: String,
-        required: false
+    file:{
+        type:String
     },
     content:{
         type: String,
@@ -21,7 +21,7 @@ const blogSchema = mongoose.Schema({
     user:{
         type: mongoose.Types.ObjectId,
         ref: "user"
-    }
+    },
 })
 
 const blogModel = mongoose.model("blog", blogSchema);

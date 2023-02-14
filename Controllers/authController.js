@@ -2,7 +2,6 @@
 const User = require("../Models/userModel")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const { findOne } = require("../Models/userModel")
 
 const login = async(req, res) => {
     try{
@@ -62,16 +61,53 @@ const signup = async(req, res) => {
 
 }
 
-const profile = async(req, res)=>{
-    
+const profile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id)
+
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        let file = user.file || '';
+        if (req.file) {
+            file = req.file.filename;
+        }
+
+        user.firstName = req.body.firstName;
+        user.secondName = req.body.secondName;
+        user.location = req.body.location;
+        user.bio = req.body.bio;
+        user.work = req.body.work;
+        user.file = file;
+        await user.save();
+        return res.status(200).json({ message: "Profile updated successfully" });
+    } catch (e) {
+        return res.status(400).json({ message: "There was an error. Please try again" });
+    }
+};
+
+const user = async(req,res)=>{
     try{
-        const userId = req.user.id
-        await User.findByIdAndUpdate(userId, req.body, {new:true});
-        res.status(200).json({message:"Profile updated successfully"})
+        
+        const user = await User.findById(req.user.id)
+        res.status(200).json({user})
     }catch(e){
-        res.status(400).json({message:"There was an error! Please try again"})
+        return res.status(400).json({message: "User not found"})
     }
 }
+
+const userProfile = async(req,res)=>{
+    try{
+        
+        const userProfile = await User.findById(req.params.id)
+        res.status(200).json({userProfile})
+    }catch(e){
+        return res.status(400).json({message: "User not found"})
+    }
+}
+
+
 
 const changePass = async(req,res)=>{
     
@@ -125,5 +161,7 @@ module.exports = {
     signup,
     profile,
     changePass,
-    protect
+    protect,
+    user, 
+    userProfile
 }
