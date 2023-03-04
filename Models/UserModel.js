@@ -27,6 +27,9 @@ const schema = mongoose.Schema({
   work: {
     type: String,
   },
+  image: {
+    type: String,
+  },
 });
 
 const userModel = mongoose.model("User", schema);

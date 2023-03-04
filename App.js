@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("path");
+const bodyParser = require("body-parser");
 const express = require("express");
 const dotenv = require("dotenv");
 
@@ -13,6 +16,12 @@ require("./Server");
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use("/", express.static(path.join("images")));
+
+app.use("/blog-images", express.static(path.join("blogImages")));
 
 app.use("/comments", comment);
 app.use("/auth", authRoutes);

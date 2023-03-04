@@ -3,7 +3,7 @@ const User = require("../Models/UserModel");
 
 const bloglist = async (req, res) => {
   try {
-    let bloged = await blog.find();
+    let bloged = await blog.find().populate("comment").populate("user");
     res.status(200).json({ bloged });
   } catch (e) {
     res.status(400).json({ message: "OOPS ERROR!!" });
@@ -25,7 +25,7 @@ const oneblog = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const oneBlog = await blog.findById(id, req.body).populate("user");
+    const oneBlog = await blog.findById(id).populate("user");
     res.status(200).json({ oneBlog });
   } catch {
     res.status(400).json({ message: "from getOneBlog error!!!!!" });
@@ -33,6 +33,8 @@ const oneblog = async (req, res) => {
 };
 
 const createblog = async (req, res) => {
+  const { title, content } = req.body;
+
   try {
     // getting users data from database
     const data = await User.findById(req.user.id);
@@ -43,9 +45,21 @@ const createblog = async (req, res) => {
         .json({ message: "please compelete your profile first" });
     }
 
-    req.body.user = req.user.id;
+    let imageFeild = "";
+    if (req.file) {
+      imageFeild = req.file.originalname;
+    }
+
+    //
+    const createBlog = {
+      title,
+      content,
+      image: imageFeild,
+      user: req.user.id,
+    };
+
     //creating our new post
-    await blog.create(req.body);
+    await blog.create(createBlog);
     res.status(200).json({ message: " you've created a new post " });
   } catch (e) {
     res.status(400).json({
@@ -56,19 +70,25 @@ const createblog = async (req, res) => {
 
 const editblog = async (req, res) => {
   const idEdit = req.params.id;
+  const { title, content } = req.body;
+
+  let editedImage = "";
+  if (req.file) {
+    editedImage = req.file.originalname;
+  }
 
   //
   const newUpdate = {
     id: idEdit,
     title: req.body.title || blog.title,
     content: req.body.content || blog.content,
+    image: editedImage || blog.image,
   };
 
   try {
-    await blog.findByIdAndUpdate(idEdit, newUpdate).then(() => {
-      res.status(200).json({
-        message: "successfully edited ",
-      });
+    await blog.findByIdAndUpdate(idEdit, newUpdate);
+    res.status(200).json({
+      message: "successfully edited ",
     });
   } catch {
     res.status(400).json({ message: "OOPS!! couldn't solved" });
@@ -85,7 +105,7 @@ const deleteblog = async (req, res) => {
       });
     });
   } catch {
-    res.status(200).json({ message: "OOPS!!" });
+    res.status(400).json({ message: "OOPS!! couldn't delete" });
   }
 };
 
