@@ -3,6 +3,7 @@
 So we nearly finishing the bootcamp 🎉.This will be creating a blog application for our final project which will incorporate alot of things we have learnt so far and alot of new concepts. For this project the main features for the API will include as follows:
 
 
+
 ## 1. Auth Feature
 - **Sign in** - For a user to sign in to the application
 - **Sign up** - For a user to register
