@@ -19,6 +19,26 @@ const userSchema= mongoose.Schema({
         min:6,
         max:12,
         required:true
+    },
+    location:{
+        type:String
+
+    },
+    bio:{
+        type:String
+    },
+    work:{
+        type:String
+    } ,
+    image:{
+        public_id: {
+            type: String,
+           
+        },
+        url: {
+            type: String,
+            
+        }
     }
   
 })
