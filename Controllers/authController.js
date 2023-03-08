@@ -184,7 +184,7 @@ const changePassword = async(req, res) => {
 };
 
  
- //Get one blog by ID
+ //Get one user by ID
 const getUser = async(req, res) => {
   try{
    const user =await User.findById(req.params.id)
