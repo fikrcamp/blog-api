@@ -4,6 +4,14 @@ const commentSchema = mongoose.Schema({
     Comment:{
         type:String,
         required:true
+    },
+    User:{
+        type:mongoose.Types.ObjectId,
+        ref:"user"
+    },
+    blog:{
+        type: mongoose.Types.ObjectId,
+        ref:"blog"
     }
 })
 

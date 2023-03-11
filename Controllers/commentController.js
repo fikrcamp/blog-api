@@ -2,24 +2,41 @@ const Comment = require("../Models/commentModel");
 
   //  
 exports.getComment = async(req, res) => {
-  await Comment.find().then((comments)=>{
+  const {id} = req.params
+  await Comment.find({blogs:id}).populate("User").then((comments)=>{
     res.send({comments})
-  }).catch(()=>{
+  }).catch((e)=>{
     res.status(400).json({ message: "oops we have error" });
+    console.log(e.message);
   })
 }
   //  
 exports.createComment = async(req, res) => {
+  // 
   try{
+    req.body.User = req.user.id
+    // console.log(req.user)
+    
+    // console.log(req.body.blog)
     await Comment.create(req.body)
     res.status(200).json({message:"You have created comment"})
 
-}catch{
+}catch(e){
     res.status(400).json({message:"Oops we have error!"})
-}
+} 
+console.log(e.message);
   };
   
   // 
+
+// exports.userblog = (req,res)=>{
+//   try{
+//     res.status(200).json({message:"here user blogs"})
+//   }catch(e){
+//     res.status(401).json({message:"couldn't find blogs"})
+//   }
+// }
+
 exports.editComment = async(req, res) => {
    
     try{
