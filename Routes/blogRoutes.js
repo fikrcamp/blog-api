@@ -12,6 +12,7 @@ router.route("/create").post(authController.protect, blogController.createBlog);
 router.route("/my").get(authController.protect,blogController.userblog);
 
 router.route("/oneBlog/:id").get(blogController.oneBlog);
+router.route("/userblogs").get(authController.protect, blogController.userBlogs);
 
 router.route("/edit/:id").put(blogController.editBlog);
 

@@ -1,15 +1,27 @@
 const Comment = require("../Models/commentModel");
 
   //  
+// exports.getComment = async(req, res) => {
+//   const {id} = req.params
+//   await Comment.find({blogs:id}).populate("User").then((comments)=>{
+//     res.send({comments})
+//   }).catch((e)=>{
+//     res.status(400).json({ message: "oops we have error" });
+//     console.log(e.message);
+//   })
+// }
+
 exports.getComment = async(req, res) => {
-  const {id} = req.params
-  await Comment.find({blogs:id}).populate("User").then((comments)=>{
+  try{
+    const {id} =req.params
+    const comments =   await Comment.find({blog:id}).populate("blog").populate("User")
     res.send({comments})
-  }).catch((e)=>{
-    res.status(400).json({ message: "oops we have error" });
-    console.log(e.message);
-  })
-}
+  }catch(e){
+    res.status(400).json({ message: "Error! can't fetch all the comment" });
+  
+  }
+
+};
   //  
 exports.createComment = async(req, res) => {
   // 

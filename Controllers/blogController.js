@@ -45,10 +45,10 @@ const User = require("../Models/userModel")
       //save blog
       //1.get the user data from database
       const user = await User.findById(req.user.id)
-      console.log(user)
+      // console.log(user)
       //2.check if is empty location,bio,work
-    if(user.loaction == null || user.work == null || user.bio == null){
-     return res.status(401).json({message:"please complete you profile first"})
+    if(user.location == null || user.work == null || user.bio == null){
+     return res.status(401).json({message:"please complete you profile"})
     }
 
 
@@ -58,7 +58,7 @@ const User = require("../Models/userModel")
       req.body.user = req.user.id
       // console.log(req.user)
       
-      // await Blog.create(req.body)
+      await Blog.create(req.body)
       res.status(200).json({message:"You have created blog"})
   
   }catch{
@@ -66,7 +66,7 @@ const User = require("../Models/userModel")
   }
   };
   
-  //
+  //edit
   exports.editBlog = async(req, res) => {
     try{
       await Blog.updateOne(req.body)
@@ -75,7 +75,15 @@ const User = require("../Models/userModel")
       res.status(400).json({message:"Oops we have error!"})
     }
   };
-  
+
+  exports.editBlog = async(req, res) => {
+    await Blog.findByIdAndUpdate(req.params.id ,req.body ).then((blogs)=>{
+      res.status(200).json({blogs ,editedMessage:"your blog is updated"});
+    }).catch(()=>{
+      res.status(400).json({ message: "Error! can't edit your blog id" });
+    })
+   
+  };
   // 
   exports.deleteBlog = async(req, res) => {
    
@@ -88,4 +96,19 @@ const User = require("../Models/userModel")
     
   };
   
+
+  //user blogs
+exports.userBlogs = async(req, res) => {
+    try{
+     console.log(req.user.id);
+       const {id} = req.user
+       const blogs= await  Blog.find({user:id})
+       res.status(200).json({ message: blogs});
+     } 
+     catch(e){
+      res.status(400).json({ message: "error can't get userblogs" });
+
+     }
+        
+  };
   
